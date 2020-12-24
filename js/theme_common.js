@@ -72,14 +72,14 @@ function music_switch(){ //鍒囨崲
         audio_music.play();
         audio_record.pause(); //鎾斁闊充箰鏃跺綍闊充竴瀹氭殏鍋�                
         img_music.style.webkitAnimation="music_play_rotate 1s linear infinite";
-        $(".div_music_tips").html("姝ｆ挱鏀�").show();                
+        $(".div_music_tips").html("开始播放").show();                
         timeout_music=setTimeout(function(){$(".div_music_tips").hide()}, 2500);
     }else{
         console.log('switch music to paused'); 
         audio_music.pause();
         // audio_record.play(); //
         img_music.style.webkitAnimation="";
-        $(".div_music_tips").html("宸叉殏鍋�").show();  
+        $(".div_music_tips").html("暂停播放").show();  
         timeout_music=setTimeout(function(){$(".div_music_tips").hide()}, 2500); 
     } 
 }
