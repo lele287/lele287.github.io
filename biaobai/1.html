@@ -1,1 +1,107 @@
-// http://x5.62744150565474494e5a.aaa.toupiao.lezuwan.com/api/v1/app/players?page=1&limit=20&stage_code=MnWkdM9jDw
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!--    http://x5.62744150565474494e5a.aaa.toupiao.lezuwan.com/api/v1/app/players?page=1&limit=20&stage_code=MnWkdM9jDw-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        .head{
+            text-align: center;
+        }
+        .container{
+            margin: 0 50px;
+            display: flex;
+            flex-wrap: wrap ;
+        }
+        .container_div{
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container_img{
+            width: 300px;
+            height: 400px;
+            margin: 10px;
+        }
+        .container_i{
+            font-size: 12px;
+        }
+        .paging{
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .paging>button{
+            margin: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        <div>
+            商丘学院帅哥美女一览表，数据来源：<a href="http://x5.62744150565474494e5a.aaa.toupiao.lezuwan.com/app/MnWkdM9jDw#/home">最美大学生风采展示</a>
+        </div>
+        <div>
+            仅供娱乐，不可商用！转发请著名出处！
+        </div>
+    </div>
+    <div class="container">
+
+    </div>
+    <div class="paging">
+        <button class="first">首页</button>
+        <button class="upper">上一页</button>
+        <button class="lower">下一页</button>
+    </div>
+</body>
+    <script>
+        var myData = {
+            page:1,
+            limit:8,
+            stage_code:'MnWkdM9jDw'
+        }
+        function dataImg(){
+            $.ajax({
+                type: "GET",
+                dataType:'json',
+                url: 'http://x5.62744150565474494e5a.aaa.toupiao.lezuwan.com/api/v1/app/players',
+                data: myData,
+                success: function (data) {
+                    console.log(data.list)
+                    var myHtml='';
+                    data.list.forEach(value => {
+                        myHtml+=`
+                            <div class="container_div">
+                                <img src=${'http://lezuwan.oss-cn-hangzhou.aliyuncs.com/'+value.cover} class="container_img">
+                                <i class="container_i">${value.code}号_${value.name}</i>
+                            </div>`
+                    })
+                    $(".container").html(myHtml)
+                }
+            });
+        }
+        dataImg();
+        $('.lower').click(function (){
+            myData.page+=1;
+            dataImg();
+        })
+        $('.upper').click(function (){
+            if(myData.page>0){
+                myData.page-=1;
+                dataImg();
+            }
+        })
+        $('.first').click(function (){
+            myData.page=1;
+            dataImg();
+        })
+    </script>
+</html>
+
+<!--http://lezuwan.oss-cn-hangzhou.aliyuncs.com/superman_vote/2/5/ArPEj2TSnj.jpg-->
