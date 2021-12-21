@@ -1,19 +1,14 @@
-# my-project
+# lele-personal
 
-## Project setup
-```
-npm install
-```
+## dist_education
+教育官网 [dist_education](https://lele287.github.io/dist_education)
+## file
+文件
+### images
+教育官网 [dist_education](https://lele287.github.io/file/images)
+<!-- ```
+npm install 
+``` -->
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## virtuoso
+[virtuoso](https://lele287.github.io/virtuoso).
