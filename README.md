@@ -11,4 +11,4 @@ npm install
 ``` -->
 
 ## virtuoso
-[virtuoso](https://lele287.github.io/virtuoso).
+[virtuoso](https://lele287.github.io/virtuoso)
