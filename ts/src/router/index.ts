@@ -4,10 +4,10 @@ import { LoadingBar } from "view-design";
 
 Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
-  {
-    path: "/",
-    component: () => import("../App.vue"),
-  },
+  // {
+  //   path: "/",
+  //   component: () => import("../views/home/TemplateReadme.vue"),
+  // },
 ];
 const router = new VueRouter({
   routes,

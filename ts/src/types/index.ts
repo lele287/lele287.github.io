@@ -12,7 +12,7 @@ export interface IServer {
   subUrl: string;
 }
 export interface IState {
-    accessToken:string
+  accessToken: string;
 }
 export interface IConfig {
   userService: IServer;

@@ -1,6 +1,6 @@
 import moment from "moment";
 import md5Encode from "../plugins/md5";
-import { TOKEN_KEY, rasterManage } from "../config";
+import { TOKEN_KEY } from "../config";
 import store from "../store";
 
 let id = 1;
@@ -182,33 +182,33 @@ export function serviceKey(type: string): string {
  * @returns {string} 返回字符串
  *
  */
- export function formatServiceUrl(
-    host: string,
-    subUrl: string,
-    moduleUrl: string = "",
-    query: object = {},
-    needToken: boolean = true
-  ): string {
-    if (needToken) {
-      query[TOKEN_KEY] = store.state.accessToken;
-    }
-    const keys = Object.keys(query) || [];
-    const len = keys ? keys.length : 0;
-    let sQuery = "";
-    keys.forEach((key, index) => {
-      if (index + 1 == len) {
-        sQuery += key + "=" + query[key];
-      } else {
-        sQuery += key + "=" + query[key] + "&";
-      }
-    });
-    const mainUrl: string = `${host}${subUrl}`;
-    let url: string = mainUrl;
-    if (moduleUrl) {
-      url = mainUrl + `${moduleUrl}`;
-    }
-    if (sQuery) {
-      url += `?${sQuery}`;
-    }
-    return url;
+export function formatServiceUrl(
+  host: string,
+  subUrl: string,
+  moduleUrl: string = "",
+  query: any = {},
+  needToken: boolean = true
+): string {
+  if (needToken) {
+    query[TOKEN_KEY] = store.state.accessToken;
   }
+  const keys = Object.keys(query) || [];
+  const len = keys ? keys.length : 0;
+  let sQuery = "";
+  keys.forEach((key, index) => {
+    if (index + 1 == len) {
+      sQuery += key + "=" + query[key];
+    } else {
+      sQuery += key + "=" + query[key] + "&";
+    }
+  });
+  const mainUrl: string = `${host}${subUrl}`;
+  let url: string = mainUrl;
+  if (moduleUrl) {
+    url = mainUrl + `${moduleUrl}`;
+  }
+  if (sQuery) {
+    url += `?${sQuery}`;
+  }
+  return url;
+}

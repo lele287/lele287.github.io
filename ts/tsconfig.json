@@ -30,6 +30,6 @@
     "src/components/city/data/anhui.js",
     "src/components/city/data/anhui.js",
     "src/components/city/data/province.js"
-, "src/views/components/region.js"  ],
+  ],
   "exclude": ["node_modules"]
 }
