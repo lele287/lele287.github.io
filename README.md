@@ -1,12 +1,12 @@
-# lele-personal
-
-## dist_education
-教育官网 [dist_education](https://lele287.github.io/dist_education)
-## file
-[文件管理](https://lele287.github.io/file/index.html)
+# 外链演示
 <!-- ```
 npm install 
 ``` -->
-
-## virtuoso
-[virtuoso](https://lele287.github.io/virtuoso)
+## education
+[教育官网](https://lele287.github.io/education)
+## file
+[文件管理](https://lele287.github.io/file)
+## demonstration
+[virtuoso](https://lele287.github.io/demonstration/virtuoso)
+[大眼](https://lele287.github.io/demonstration/eye)
+[水波纹](https://lele287.github.io/demonstration/ripple)
