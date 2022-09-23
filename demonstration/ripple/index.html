@@ -28,6 +28,9 @@
             overflow: visible;
             outline: none;
         }
+        #img{
+            -webkit-user-drag: none;
+        }
     </style>
 </head>
 
@@ -36,21 +39,20 @@
         <p>在Chrome或者Firefox浏览器下点击下面的按钮或者图片，就会看到，从点击位置开始，有水波荡漾的特效：</p>
         <div style="padding: 20px 0;">
             <div style="padding-bottom: 10px;">
-                <button id="button" type="button" class="ui-button ui-button-primary"
-                    onclick="getImage()">更换图片</button>
+                <button id="button" type="button" class="ui-button" onclick="getImage()">更换图片</button>
             </div>
             <img id="img" src="" alt="加载中" width="800">
         </div>
     </div>
 </body>
 <script>
-    rippleEffect(document.getElementById('button'));
-    rippleEffect(document.getElementById('img'));
     function getImage() {
         let img = document.getElementById('img');
         img.src = "https://api.btstu.cn/sjbz/api.php?lx=dongman&format=images&random=" + Math.random();
     }
     getImage();
+    rippleEffect(document.getElementById('button'));
+    rippleEffect(document.getElementById('img'));
 </script>
 
 </html>
