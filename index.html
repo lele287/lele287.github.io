@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/assets/favicon.ico"/>
+    <link rel="icon" href="/assets/favicon.ico" />
     <link rel="stylesheet" href="./assets/index.css" />
     <title>LEEL-个人主页</title>
   </head>
@@ -97,47 +97,11 @@
       </div>
     </div>
   </body>
-  <script>
+  <script type="module">
+    import { items } from './config.js'
     const projectlistDom = document.getElementById('projectlist')
-    const data = [
-      {
-        title: 'education',
-        content: '教育官网实例',
-        url: './assets/education.png',
-        href: './education'
-      },
-      {
-        title: 'file',
-        content: '文件管理页面',
-        url: './assets/file.png',
-        href: './file'
-      },
-      {
-        title: 'Large eye',
-        content: '大大的眼睛',
-        url: './assets/largeEye.png',
-        href: './demonstration/eye'
-      },
-      {
-        title: 'virtuoso',
-        content: '圣诞快乐',
-        url: './assets/virtuoso.png',
-        href: './demonstration/virtuoso'
-      },
-      {
-        title: 'water ripple',
-        content: '水波纹',
-        url: './assets/waterRipple.png',
-        href: './demonstration/ripple'
-      },
-      {
-        title: 'water ripple',
-        content: '水波纹',
-        url: './assets/chart.png',
-        href: './chart.html'
-      },
-    ]
-    data.forEach(item => {
+
+    items.forEach(item => {
       projectlistDom.innerHTML += `
         <div class="card-wrap">
           <div class="card" onclick="tolink('${item.href}')">
@@ -153,7 +117,8 @@
         </div>
       `
     })
-
+  </script>
+  <script>
     let width, height, mouseX, mouseY, mousePX, mousePY
 
     const cardDom = document.getElementsByClassName('card')
