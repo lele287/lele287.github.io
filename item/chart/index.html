@@ -81,8 +81,8 @@
 
       // 鼠标矩形绘制
       addDownMove = e => {
-        var x = e.offsetX / this.scale
-        var y = e.offsetY / this.scale
+        var x = (e.offsetX - this.offsetX) / this.scale
+        var y = (e.offsetY - this.offsetY) / this.scale
         const list = [x, y]
         switch (this.drawData.type) {
           case 'rect':
@@ -100,8 +100,8 @@
       }
 
       moveDrawFunc = e => {
-        var x = e.offsetX / this.scale
-        var y = e.offsetY / this.scale
+        var x = (e.offsetX - this.offsetX) / this.scale
+        var y = (e.offsetY - this.offsetY) / this.scale
         switch (this.drawData.type) {
           case 'rect':
             this.downData.data[2] = x - this.downData.data[0]
@@ -170,6 +170,7 @@
 
       setDrawType(value) {
         this.drawData = value
+        this.removeMouseEvent()
         switch (value.type) {
           case 'rect':
             this.El.addEventListener('mousedown', this.addDownMove)
@@ -239,12 +240,24 @@
         }
       }
 
+      // 移除鼠标事件
+      removeMouseEvent = () => {
+        this.wrapDom.style.cursor = ''
+        this.removeMouseDown()
+        this.removeMouseMove()
+      }
+
       // 移除鼠标移动事件
       removeMouseMove = () => {
-        this.wrapDom.style.cursor = ''
         this.El.removeEventListener('mousemove', this.moveCanvasFunc, false)
         this.El.removeEventListener('mousemove', this.moveShapeFunc, false)
         this.El.removeEventListener('mousemove', this.moveDrawFunc, false)
+      }
+
+      // 移除鼠标按下事件
+      removeMouseDown = () => {
+        this.El.removeEventListener('mousedown', this.addMouseMove, false)
+        this.El.removeEventListener('mousedown', this.addDownMove, false)
       }
 
       // 移动画布
