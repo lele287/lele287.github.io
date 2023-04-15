@@ -41,72 +41,6 @@
             padding: 50px;
         }
     </style>
-    <script>
-        const fileUrl = "https://lele287.github.io/file"
-        const imagesUrl = `${fileUrl}/images`
-        const libsUrl = `${fileUrl}/libs`
-        const dataUrl = `${fileUrl}/data.json`
-        var imgList = []
-        var dataList = []
-        function getDataList() {
-            $.ajax({
-                type: "GET",
-                url: dataUrl,
-                dataType: 'JSON',
-                success: function (data) {
-                    dataList = data;
-                    init();
-                },
-                error: function (jqXHR) {
-                    console.log("Error: " + jqXHR.status);
-                }
-            });
-        }
-        function init() {
-            initImg();
-            initFile();
-            $(".fileList").addClass("hide")
-            $(".tab").eq(0).addClass("select-corol")
-            $(".tab").click(function () {
-                $(".content>div").each(function (index) {
-                    $(this).removeClass("hide");
-                });
-                $(".tab").each(function (index) {
-                    $(this).removeClass("select-corol");
-                });
-                if ($(this).text() == "图片") {
-                    $(".fileList").addClass("hide")
-                    $(".tab").eq(0).addClass("select-corol")
-                } else if ($(this).text() == "文档") {
-                    $(".imgList").addClass("hide")
-                    $(".tab").eq(1).addClass("select-corol")
-                }
-            })
-        }
-        function initImg() {
-            let img = "";
-            dataList.images.forEach(element => {
-                img += `<div class="img"><a href="${imagesUrl}/${element.name}" target="_blank"><img src="${imagesUrl}/${element.name}" alt="" style="height: 250px;"></a><div style="word-wrap: break-word;word-break: break-all;overflow: hidden;">${element.name}</div></div>`
-            });
-            $(".imgList").html(img)
-        }
-        function initFile() {
-            let file = "";
-            dataList.libs.forEach(element => {
-                if (element.children && element.children.length > 0) {
-                    element.children.forEach(item=>{
-                        file += `<a href="${libsUrl}/${element.name}/${item.name}" style="text-decoration:none; padding: 20px;"><span>${element.name}/${item.name}</span></a>`
-                    })
-                } else {
-                    file += `<a href="${libsUrl}/${element.name}" style="text-decoration:none; padding: 20px;"><span>${element.name}</span></a>`
-                }
-            });
-            $(".fileList").html(file)
-        }
-        $(document).ready(function () {
-            getDataList();
-        });
-    </script>
 </head>
 
 <body>
@@ -122,4 +56,54 @@
     </div>
 </body>
 
+<script type="module">
+    import dataList from './data.js'
+    const fileUrl = "/item/file"
+    const imagesUrl = `${fileUrl}/images`
+    const libsUrl = `${fileUrl}/libs`
+    const dataUrl = `${fileUrl}/data.json`
+
+    function init() {
+        initImg();
+        initFile();
+        $(".fileList").addClass("hide")
+        $(".tab").eq(0).addClass("select-corol")
+        $(".tab").click(function () {
+            $(".content>div").each(function (index) {
+                $(this).removeClass("hide");
+            });
+            $(".tab").each(function (index) {
+                $(this).removeClass("select-corol");
+            });
+            if ($(this).text() == "图片") {
+                $(".fileList").addClass("hide")
+                $(".tab").eq(0).addClass("select-corol")
+            } else if ($(this).text() == "文档") {
+                $(".imgList").addClass("hide")
+                $(".tab").eq(1).addClass("select-corol")
+            }
+        })
+    }
+    init()
+    function initImg() {
+        let img = "";
+        dataList.images.forEach(element => {
+            img += `<div class="img"><a href="${imagesUrl}/${element.name}" target="_blank"><img src="${imagesUrl}/${element.name}" alt="" style="height: 250px;"></a><div style="word-wrap: break-word;word-break: break-all;overflow: hidden;">${element.name}</div></div>`
+        });
+        $(".imgList").html(img)
+    }
+    function initFile() {
+        let file = "";
+        dataList.libs.forEach(element => {
+            if (element.children && element.children.length > 0) {
+                element.children.forEach(item=>{
+                    file += `<a href="${libsUrl}/${element.name}/${item.name}" style="text-decoration:none; padding: 20px;"><span>${element.name}/${item.name}</span></a>`
+                })
+            } else {
+                file += `<a href="${libsUrl}/${element.name}" style="text-decoration:none; padding: 20px;"><span>${element.name}</span></a>`
+            }
+        });
+        $(".fileList").html(file)
+    }
+</script>
 </html>

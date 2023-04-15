@@ -34,5 +34,11 @@ export const items = [
     content: '绘制',
     url: './assets/image/chart.png',
     href: './item/chart'
-  }
+  },
+  {
+    title: 'logo produce',
+    content: '生成logo',
+    url: './assets/image/logoProduce.png',
+    href: './item/logoProduce'
+  },
 ]

@@ -1,0 +1,294 @@
+<!--
+ * @Author: lvkangle
+ * @Date: 2023-04-15 16:01:39
+ * @Description: logo生产 ===> 来自logo制作网站 https://www.logomaker.com.cn/index.php?m=frontend&c=member&a=member_recommend
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <title>logoProduce</title>
+    <style>
+      select,
+      input {
+        background-color: rgba(29, 29, 31, 0.72);
+        color: #fff;
+      }
+      .head {
+        width: 100vw;
+        height: 44px;
+        line-height: 44px;
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        background: rgba(29, 29, 31, 0.72);
+        backdrop-filter: saturate(180%) blur(20px);
+        color: #fff;
+        padding: 0 60px;
+      }
+      .head > div {
+        margin-right: 10px;
+      }
+
+      #logos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .item {
+        position: relative;
+        cursor: pointer;
+      }
+      .end {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        position: absolute;
+        bottom: 0;
+        justify-content: space-around;
+        display: none;
+        /* display: flex; */
+      }
+      .item:hover > .end {
+        display: flex;
+      }
+      .end > div {
+        cursor: pointer;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: rgba(17, 35, 47, 0.5);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <div>
+        <select id="industry"></select>
+      </div>
+      <div>
+        <input id="zhName" type="text" placeholder="名称" onchange="changeZhName(event)" />
+      </div>
+      <div>
+        <input
+          id="englishName"
+          type="text"
+          placeholder="英文名称"
+          onchange="changeEnglishName(event)"
+        />
+      </div>
+      <div>
+        <input id="tagName" type="text" placeholder="标签" onchange="changeTagName(event)" />
+      </div>
+    </div>
+    <div id="logos"></div>
+  </body>
+  <script>
+    let json = {}
+    let html = '',
+      width = 300,
+      height = 300,
+      page = 0,
+      pagesize = 30
+
+    const storages = {
+      industry_id: 1,
+      title: '',
+      slogan: '',
+      industry_tag: ''
+    }
+    const getParameters = URL => {
+      if (URL.split('?').length !== 2) return {}
+      return JSON.parse(
+        `{"${decodeURI(URL.split('?')[1])
+          .replace(/"/g, '\\"')
+          .replace(/&/g, '","')
+          .replace(/=/g, '":"')}"}`
+      )
+    }
+
+    const { more_icon_id, more_template_id, more_type, img_svg } = getParameters(location.href)
+
+    function setData() {
+      json = {
+        ...json,
+        more_icon_id,
+        more_template_id,
+        more_type,
+        img_svg,
+        width,
+        height,
+        page,
+        pagesize,
+        industry_id: storages.industry_id || 1,
+        title: storages.title,
+        slogan: storages.slogan,
+        industry_tag: storages.industry_tag
+      }
+    }
+    function setItem() {
+      for (const key in storages) {
+        if (Object.hasOwnProperty.call(storages, key)) {
+          const element = storages[key]
+          localStorage.setItem(key, element)
+        }
+      }
+    }
+    function getItem() {
+      for (const key in storages) {
+        if (Object.hasOwnProperty.call(storages, key)) {
+          storages[key] = localStorage.getItem(key)
+        }
+      }
+    }
+    function setChange() {
+      industry.value = Number(storages.industry_id)
+      zhName.value = storages.title
+      englishName.value = storages.slogan
+      tagName.value = storages.industry_tag
+    }
+
+    function getTaget() {
+      fetch('https://www.logomaker.com.cn/api.php?op=icons&act=get_config')
+        .then(res => res.json())
+        .then(data => {
+          addIndustry(data.data.industry)
+          setChange()
+        })
+    }
+
+    function changeTab() {
+      html = ''
+      setItem()
+      loadMoreImages()
+      window.scrollTo(0, 0)
+    }
+
+    function addIndustry(data) {
+      //   const select = document.createElement('select')
+      const option = document.createElement('option')
+      option.style.display = 'none'
+      industry.appendChild(option)
+      industry.onchange = event => {
+        storages.industry_id = Number(event.target.value)
+        changeTab()
+      }
+      data.forEach(row => {
+        const optgroup = document.createElement('optgroup')
+        optgroup.label = row.label
+        row.children.forEach(col => {
+          const option = document.createElement('option')
+          option.value = col.value
+          option.innerText = col.label
+          optgroup.appendChild(option)
+        })
+        industry.appendChild(optgroup)
+        industry.value = Number(storages.industry_id)
+      })
+      //   industry.appendChild(select)
+    }
+
+    function changeZhName(event) {
+      storages.title = event.target.value
+      changeTab()
+    }
+
+    function changeEnglishName(event) {
+      storages.slogan = event.target.value
+      changeTab()
+    }
+
+    function changeTagName(event) {
+      storages.industry_tag = event.target.value
+      changeTab()
+    }
+
+    function loadMoreImages() {
+      setData()
+      // your code to load more images goes here
+      fetch('https://api.logomaker.com.cn/generate/svg/templateGenerator', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+      })
+        .then(data => data.json())
+        .then(data => {
+          data.forEach(element => {
+            html += `
+            <div onclick=goto('${element.img_svg}') class='item' style='width:${width}px;height:${height}px;'>
+                <img src='${element.img_svg}' style='width:100%;height:100%;'></img>
+                <div class='end'>
+                    <div onclick=goto('/getlogo.html?img_svg=${element.img_svg}&more_type=color')>换色</div>    
+                    <div onclick=goto('/getlogo.html?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=icon')>换图标</div>    
+                    <div onclick=goto('/getlogo.html?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=template')>换组合</div>    
+                </div>
+            </div>`
+          })
+          logos.innerHTML = html
+        })
+    }
+
+    function goto(url) {
+      window.open(url, '_blank')
+    }
+
+    function throttle(func, wait) {
+      let lastTime = 0
+
+      return function (...args) {
+        const now = Date.now()
+
+        if (now - lastTime >= wait) {
+          func.apply(this, args)
+          lastTime = now
+        }
+      }
+    }
+
+    function debounce(func, delay) {
+      let timeoutId
+      return function () {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => func.apply(this, arguments), delay)
+      }
+    }
+
+    function init() {
+      getItem()
+      setData()
+      setChange()
+      getTaget()
+      loadMoreImages()
+
+      window.addEventListener(
+        'scroll',
+        debounce(function () {
+          // Get the current position of the scroll and the height of the viewport
+          const scrollPosition = window.innerHeight + window.scrollY
+          const pageHeight = document.documentElement.scrollHeight
+
+          if (logos.children.length > 300) {
+            html = ''
+            logos.innerHTML = html
+            window.scrollTo(0, 0)
+          }
+
+          // Check if we have reached the bottom of the page
+          if (scrollPosition >= pageHeight - json.height) {
+            page += 1
+            loadMoreImages()
+          }
+        }, 200)
+      )
+    }
+    init()
+  </script>
+</html>
