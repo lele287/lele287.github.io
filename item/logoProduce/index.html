@@ -143,7 +143,7 @@
     function getItem() {
       for (const key in storages) {
         if (Object.hasOwnProperty.call(storages, key)) {
-          storages[key] = localStorage.getItem(key)
+          storages[key] = localStorage.getItem(key) || ''
         }
       }
     }
