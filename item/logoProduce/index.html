@@ -226,9 +226,9 @@
             <div onclick=goto('${element.img_svg}') class='item' style='width:${width}px;height:${height}px;'>
                 <img src='${element.img_svg}' style='width:100%;height:100%;'></img>
                 <div class='end'>
-                    <div onclick=goto('/getlogo.html?img_svg=${element.img_svg}&more_type=color')>换色</div>    
-                    <div onclick=goto('/getlogo.html?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=icon')>换图标</div>    
-                    <div onclick=goto('/getlogo.html?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=template')>换组合</div>    
+                    <div onclick=goto('?img_svg=${element.img_svg}&more_type=color')>换色</div>    
+                    <div onclick=goto('?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=icon')>换图标</div>    
+                    <div onclick=goto('?more_icon_id=${element.id}&more_template_id=${element.template_id}&more_type=template')>换组合</div>    
                 </div>
             </div>`
           })
