@@ -15,7 +15,7 @@ export default {
           name: 'base64.js'
         },
         {
-          name: 'md4.js'
+          name: 'md5.js'
         }
       ]
     },

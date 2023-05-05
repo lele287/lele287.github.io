@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>上落效果</title>
+    <style>
+      body,
+      html {
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      #item {
+        display: inline-block;
+      }
+      .particle {
+        width: 0;
+        height: 0;
+        border: 2px solid #0f0;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 10px;
+        position: absolute;
+        bottom: -4px;
+        animation-name: particle;
+        animation-iteration-count: infinite;
+      }
+      @keyframes particle {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-100vh);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <input
+      type="range"
+      min="10"
+      max="500"
+      value="20"
+      style="position: absolute; right: 10px; top: 10px"
+      onchange="change(event)"
+    />
+    <div id="item"></div>
+  </body>
+  <script>
+    function Color() {
+      const colorAngle = Math.floor(Math.random() * 360)
+      return 'hsla(' + colorAngle + ',100%,50%,1)' // 饱和度、亮度、透明度
+    }
+    function change(e) {
+      new Array(...item.children).forEach(element => {
+        item.removeChild(element)
+      })
+      addList(Number(e.target.value))
+    }
+    function addList(total) {
+      for (let index = 0; index < total; index++) {
+        add()
+      }
+    }
+    addList(20)
+    function add() {
+      const delay = Math.random() * 6 // 延时
+      const duration = Math.random() * 10 // 动画时长
+      const div = document.createElement('div')
+      div.classList.add('particle')
+      div.style.borderColor = Color()
+      div.style.left = innerWidth * Math.random() + 'px'
+      div.style.animationDuration = duration + 's'
+      div.style.animationDelay = delay + 's'
+      div.style.animationTimingFunction = `cubic-bezier(${Math.random()}, ${Math.random()}, ${Math.random()}, ${Math.random()})`
+      item.appendChild(div)
+      setTimeout(() => {
+        // 判断元素是否存在
+        if (item.contains(div)) {
+          item.removeChild(div)
+          add()
+        }
+      }, (duration + delay) * 1000)
+    }
+  </script>
+</html>

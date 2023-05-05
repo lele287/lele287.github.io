@@ -41,4 +41,28 @@ export const items = [
     url: './assets/image/logoProduce.png',
     href: './item/logoProduce'
   },
+  {
+    title: 'particle',
+    content: '上落效果',
+    url: './assets/image/particle.png',
+    href: './item/particle'
+  },
+  {
+    title: 'screenRecording',
+    content: '屏幕录制',
+    url: './assets/image/screenRecording.png',
+    href: './item/screenRecording'
+  },
+  {
+    title: 'textAnimation',
+    content: '文本动画效果',
+    url: './assets/image/textAnimation.png',
+    href: './item/textAnimation'
+  },
+  {
+    title: 'notelite',
+    content: 'NoteLite',
+    url: './assets/image/notelite.png',
+    href: './item/notelite'
+  },
 ]
