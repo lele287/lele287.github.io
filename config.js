@@ -48,13 +48,13 @@ export const items = [
     href: './item/particle'
   },
   {
-    title: 'screenRecording',
+    title: 'screen recording',
     content: '屏幕录制',
     url: './assets/image/screenRecording.png',
     href: './item/screenRecording'
   },
   {
-    title: 'textAnimation',
+    title: 'text animation',
     content: '文本动画效果',
     url: './assets/image/textAnimation.png',
     href: './item/textAnimation'

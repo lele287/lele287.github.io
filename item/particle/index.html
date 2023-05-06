@@ -17,25 +17,38 @@
       }
       #item {
         display: inline-block;
+        --radius: 4;
+        --trailing-length: 30;
       }
       .particle {
-        width: 0;
-        height: 0;
-        border: 2px solid #0f0;
+        width: calc(var(--radius) * 1px);
+        height: calc(var(--radius) * 1px);
         border-radius: 50%;
         display: inline-block;
         margin: 0 10px;
         position: absolute;
         bottom: -4px;
         animation-name: particle;
-        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+        background-color: var(--Color);
+      }
+      .particle::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        opacity: 0.7;
+        width: 100%;
+        height: calc(var(--trailing-length) * 1px);
+        background: linear-gradient(to bottom, var(--Color), rgba(0, 0, 0, 0.1));
       }
       @keyframes particle {
         from {
           transform: translateY(0);
         }
         to {
-          transform: translateY(-100vh);
+          transform: translateY(
+            calc(-100vh - calc(var(--radius) * 2px) - calc(var(--trailing-length) * 1px))
+          );
         }
       }
     </style>
@@ -73,19 +86,16 @@
       const duration = Math.random() * 10 // 动画时长
       const div = document.createElement('div')
       div.classList.add('particle')
-      div.style.borderColor = Color()
+      div.style.setProperty('--Color', Color())
       div.style.left = innerWidth * Math.random() + 'px'
       div.style.animationDuration = duration + 's'
       div.style.animationDelay = delay + 's'
       div.style.animationTimingFunction = `cubic-bezier(${Math.random()}, ${Math.random()}, ${Math.random()}, ${Math.random()})`
       item.appendChild(div)
       setTimeout(() => {
-        // 判断元素是否存在
-        if (item.contains(div)) {
-          item.removeChild(div)
-          add()
-        }
-      }, (duration + delay) * 1000)
+        div.remove()
+        add()
+      }, Math.ceil((duration + delay) * 1000) + 1000)
     }
   </script>
 </html>
