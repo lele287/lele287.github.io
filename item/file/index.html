@@ -58,10 +58,9 @@
 
 <script type="module">
     import dataList from './data.js'
-    const fileUrl = "/item/file"
-    const imagesUrl = `${fileUrl}/images`
-    const libsUrl = `${fileUrl}/libs`
-    const dataUrl = `${fileUrl}/data.json`
+    const fileUrl = window.location.href;
+    const imagesUrl = `${fileUrl}images`
+    const libsUrl = `${fileUrl}libs`
 
     function init() {
         initImg();

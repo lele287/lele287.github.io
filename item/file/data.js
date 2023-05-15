@@ -20,13 +20,24 @@ export default {
       ]
     },
     {
-      name: 'se',
+      name: 'mapbox',
       children: [
         {
           name: 'mapbox-gl.js'
         },
         {
           name: 'mapbox-gl.css'
+        }
+      ]
+    },
+    {
+      name: 'Se3D',
+      children: [
+        {
+          name: 'se-3d.js'
+        },
+        {
+          name: 'Widgets/se-3d.css'
         }
       ]
     }
