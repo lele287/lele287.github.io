@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="./assets/index.css" />
+    <script src="./config.js"></script>
     <title>LEEL-个人主页</title>
   </head>
   <body>
@@ -97,11 +98,10 @@
       </div>
     </div>
   </body>
-  <script type="module">
-    import { items } from './config.js'
+  <script>
     const projectlistDom = document.getElementById('projectlist')
 
-    items.forEach(item => {
+    CONFIG.items.forEach(item => {
       projectlistDom.innerHTML += `
         <div class="card-wrap">
           <div class="card" onclick="tolink('${item.href}')">
@@ -173,8 +173,8 @@
       .catch(function (err) {
         console.error(err)
       })
-  </script>
-  <script>
+
+      
     const tolink = href => {
       window.location.href = href
     }
