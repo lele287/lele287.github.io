@@ -25,6 +25,7 @@
         --perspective: 300px;
         --cardcolor: #443850;
         --textcolor: #fff;
+        --cardbr: 10%;
       }
       /* 默认样式 */
       .default {
@@ -38,19 +39,22 @@
       }
       /* 翻转卡片样式 */
       #main {
-        display: flex;
         width: 100%;
         height: 100%;
+        display: flex;
         justify-content: center;
         align-items: center;
+      }
+      #main > div {
+        flex-shrink: 0;
       }
       .time {
         position: relative;
         width: var(--width);
         height: var(--height);
+        margin: 0 8px;
         box-sizing: border-box;
         perspective: var(--perspective);
-        margin: 0 8px;
       }
       .text,
       .fill-text {
@@ -65,44 +69,97 @@
         height: var(--height);
         color: var(--cardcolor);
       }
-      .time .top {
-        position: relative;
+      .time .flod-box:hover {
+        transform: perspective(200px) rotateX(-180deg);
       }
-      .time .bottom {
-        line-height: 0; /* 把数字头顶到上面去 */
-      }
-      .time .block {
-        width: 100%;
-        height: 50%;
-        background-color: var(--cardcolor);
-        overflow: hidden;
-      }
-      .time .flod-box {
-        position: absolute;
-        top: 0; /* 为了把flod-box 放到top表面上 */
-        width: 100%;
-        height: 50%;
-        transform-style: preserve-3d;
-        transform-origin: center bottom; /* 以底部为旋转的基准点 */
-      }
-      .flod-box .flod-block {
-        position: absolute;
+      .time .flod-box::after {
+        content: attr(data-after);
         width: 100%;
         height: 100%;
+        position: absolute;
+        inset: 0;
         backface-visibility: hidden;
         overflow: hidden;
       }
-      .flod-box .front {
-        background-color: var(--cardcolor);
-      }
-      .flod-box .back {
-        background-color: var(--cardcolor);
+      .time .flod-box::before {
+        content: attr(data-before);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        line-height: 0;
         transform: rotateX(0deg) rotateY(-180deg) scale(-1);
-        line-height: 0px; /* 把数字上移了*/
+        backface-visibility: hidden;
+        overflow: hidden;
       }
-      .block,
-      .flod-block {
-        border-radius: 10%;
+      .time > div {
+        width: 100%;
+        height: 50%;
+        position: relative;
+      }
+      .time :first-child {
+        /* transition: transform 0.6s; */
+        transform-style: preserve-3d;
+        transform-origin: bottom;
+        z-index: 100;
+        float: left;
+      }
+      .time :first-child:hover {
+        transform: perspective(200px) rotateX(-180deg);
+      }
+      /* .time :last-child {
+        line-height: 100px;
+      } */
+      .time :first-child::after {
+        content: attr(data-after);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        background-color: var(--cardcolor);
+        line-height: 0;
+        overflow: hidden;
+        border-radius: var(--cardbr);
+        transform: rotate3d(0, 1, 0, 180deg) rotate3d(0, 0, 1, 180deg);
+        backface-visibility: hidden;
+      }
+      .time :first-child::before {
+        content: attr(data-before);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        background-color: var(--cardcolor);
+        line-height: var(--height);
+        overflow: hidden;
+        border-radius: var(--cardbr);
+      }
+      .time :last-child::after {
+        content: attr(data-after);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        background-color: var(--cardcolor);
+        line-height: var(--height);
+        overflow: hidden;
+        border-radius: var(--cardbr);
+      }
+      .time :last-child::before {
+        content: attr(data-before);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        top: 150px;
+        background-color: var(--cardcolor);
+        line-height: 0;
+        overflow: hidden;
+        border-radius: var(--cardbr);
+      }
+      .turning {
+        transition: transform 0.8s ease-in-out;
+        transform: rotate3d(1, 0, 0, -180deg);
       }
       #panel {
         position: fixed;
@@ -138,7 +195,6 @@
       return formattedTime
     }
     function initTime(node, config) {
-      // let { format, type, theme, hour, minute, second } = config
       let format, type, theme, hour, minute, second
       let countdownTime = [hour, minute, second]
       const exclude = 'YMDHms'
@@ -185,8 +241,8 @@
           } else {
             timeDiv.className = 'fill-text'
             timeDiv.innerHTML = `
-              <div class="fill-text">${format[index]}</div>
-            `
+            <div class="fill-text">${format[index]}</div>
+          `
           }
           nodes.push(timeDiv)
           node.appendChild(timeDiv)
@@ -197,12 +253,8 @@
           node.innerHTML = timeValue
         } else {
           node.innerHTML = `
-            <div class="top block">${timeValue}</div>
-            <div class="flod-box">
-              <div class="front flod-block">${oldtimeValue}</div>
-              <div class="back flod-block">${timeValue}</div>
-            </div>
-            <div class="bottom block">${oldtimeValue}</div>
+          <div data-before="${oldtimeValue}" data-after="${timeValue}"></div>
+          <div data-before="${oldtimeValue}" data-after="${timeValue}"></div>
           `
         }
       }
@@ -211,35 +263,19 @@
           if (theme === 'default') {
             node.innerHTML = timeValue
           } else if (theme === 'overturn') {
-            let topNode = node.querySelector('.top')
-            let flodBoxNode = node.querySelector('.flod-box')
-            let frontNode = node.querySelector('.front')
-            let backNode = node.querySelector('.back')
-            let bottomNode = node.querySelector('.bottom')
-            // 由定时器触发方式改为事件监听 （可以避免翻转效果有时被'吃掉'=>暂时不知道此bug的原因）
-            // frontNode.innerHTML = oldtimeValue
-            // bottomNode.innerHTML = oldtimeValue
-            // flodBoxNode.style.transition = '' //使其瞬间返回到 0deg
-            // flodBoxNode.style.transform = ''
-            // setTimeout(() => {
-            //   topNode.innerHTML = timeValue
-            //   backNode.innerHTML = timeValue
-            //   flodBoxNode.style.transition = 'transform 0.6s' //缓个100ms执行，0.9秒转完
-            //   flodBoxNode.style.transform = 'rotateX(-180deg)'
-            // })
-            frontNode.innerHTML = oldtimeValue
-            bottomNode.innerHTML = oldtimeValue
-            topNode.innerHTML = timeValue
-            backNode.innerHTML = timeValue
-            flodBoxNode.style.transition = 'transform 0.6s' //缓个100ms执行，0.9秒转完
-            flodBoxNode.style.transform = 'rotateX(-180deg)'
+            const ovnode = node.children[0]
+            new Array(...node.children).forEach(element => {
+              element.setAttribute('data-before', oldtimeValue)
+              element.setAttribute('data-after', timeValue)
+            })
+            ovnode.classList.add('turning')
             // 添加过渡动画结束事件的侦听器
-            flodBoxNode.addEventListener('transitionend', function () {
-              frontNode.innerHTML = timeValue
-              bottomNode.innerHTML = timeValue
+            ovnode.addEventListener('transitionend', function () {
+              new Array(...node.children).forEach(element => {
+                element.setAttribute('data-before', timeValue)
+              })
               // 重置元素的样式为初始状态
-              flodBoxNode.style.transition = 'transform 0s' // 清空过渡属性
-              flodBoxNode.style.transform = 'rotateX(0deg)' // 清空变换属性
+              ovnode.classList.remove('turning')
             })
           }
         }
@@ -318,18 +354,18 @@
       themegroup.setAttribute('value', config.theme)
       const div = document.createElement('div')
       div.innerHTML = `
-        <span>时</span>
-        <input type="text" style="width: 60px" onchange="inputChange(event,'hour')" value="${config.hour}" />
-        <span>分</span>
-        <input type="text" style="width: 60px" onchange="inputChange(event,'minute')" value="${config.minute}" />
-        <span>秒</span>
-        <input type="text" style="width: 60px" onchange="inputChange(event,'second')" value="${config.second}" />
-      `
+      <span>时</span>
+      <input type="text" style="width: 60px" onchange="inputChange(event,'hour')" value="${config.hour}" />
+      <span>分</span>
+      <input type="text" style="width: 60px" onchange="inputChange(event,'minute')" value="${config.minute}" />
+      <span>秒</span>
+      <input type="text" style="width: 60px" onchange="inputChange(event,'second')" value="${config.second}" />
+    `
       const btndiv = document.createElement('div')
       btndiv.innerHTML = `
-        <button onclick="reset(event)">暂定</button>
-        <button onclick="start(event)">继续</button>
-      `
+      <button onclick="reset(event)">暂定</button>
+      <button onclick="start(event)">继续</button>
+    `
       for (const item of types) {
         const typeoption = document.createElement('option')
         if (item.value === config.type) {
