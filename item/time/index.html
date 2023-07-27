@@ -70,7 +70,7 @@
         color: var(--cardcolor);
       }
       .time .flod-box:hover {
-        transform: perspective(200px) rotateX(-180deg);
+        transform: rotateX(-180deg);
       }
       .time .flod-box::after {
         content: attr(data-after);
@@ -151,7 +151,7 @@
         height: 100%;
         position: absolute;
         inset: 0;
-        top: 150px;
+        top: calc(var(--height) / 2);
         background-color: var(--cardcolor);
         line-height: 0;
         overflow: hidden;
