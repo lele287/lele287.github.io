@@ -65,6 +65,12 @@ var CONFIG = {
       content: 'NoteLite',
       url: './assets/image/notelite.png',
       href: './item/notelite'
-    }
+    },
+    {
+      title: 'time',
+      content: '时钟翻转',
+      url: './assets/image/time.png',
+      href: './item/time'
+    },
   ]
 }
