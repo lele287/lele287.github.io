@@ -158,7 +158,7 @@
         border-radius: var(--cardbr);
       }
       .turning {
-        transition: transform 0.8s ease-in-out;
+        transition: transform 0.7s ease-in-out;
         transform: rotate3d(1, 0, 0, -180deg);
       }
       #panel {
@@ -270,13 +270,13 @@
             })
             ovnode.classList.add('turning')
             // 添加过渡动画结束事件的侦听器
-            ovnode.addEventListener('transitionend', function () {
+            ovnode.ontransitionend = function () {
               new Array(...node.children).forEach(element => {
                 element.setAttribute('data-before', timeValue)
               })
               // 重置元素的样式为初始状态
               ovnode.classList.remove('turning')
-            })
+            }
           }
         }
       }
