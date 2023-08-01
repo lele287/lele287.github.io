@@ -314,7 +314,7 @@
       function showswitch(bool) {
         localStorage.setItem('show', bool);
         isshow = bool;
-        showBtn.innerHTML = bool ? '显示' : '隐藏';
+        showBtn.innerHTML = bool ? '隐藏' : '显示';
         typegroup.style.display = bool ? '' : 'none';
         themegroup.style.display = bool ? '' : 'none';
         colorDiv.style.display = bool ? '' : 'none';
@@ -458,7 +458,7 @@
         document.styleSheets[0].rules[0].style.setProperty(key, event.target.value);
         if (key === '--cardcolor') {
           // 动态设置卡片阴影颜色，并为hex设置透明度
-          document.styleSheets[0].rules[0].style.setProperty('--cardshadowcolor', event.target.value + '99');
+          document.styleSheets[0].rules[0].style.setProperty('--cardshadowcolor', event.target.value + '66');
         }
       }
       overallstyle[key] = event.target.value;
