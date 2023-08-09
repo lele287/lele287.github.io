@@ -1,42 +1,42 @@
 <html>
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>屏幕录制</title>
     <style>
-        body {
-            max-width: 1280px;
-            margin: 0 auto;
-            min-width: 320px;
-            min-height: 100vh;
-            text-align: center;
-        }
+      body {
+        max-width: 1280px;
+        margin: 0 auto;
+        min-width: 320px;
+        min-height: 100vh;
+        text-align: center;
+      }
 
-        #preview,
-        #playback {
-            max-width: 100%;
-            max-height: 500px;
-            background-color: #000;
-        }
+      #preview,
+      #playback {
+        max-width: 100%;
+        max-height: 500px;
+        background-color: #000;
+      }
     </style>
-</head>
+    <script type="module" crossorigin src="/static/js/index-30913bf7.js"></script>
+    <link rel="modulepreload" crossorigin href="/static/js/modulepreload-polyfill-3cfb730f.js">
+  </head>
 
-<body>
+  <body>
     <h1>屏幕录制：</h1>
     <p>
-        <button id="start-button" onclick="startRecord()">开始录制</button>
-        <button id="pause-button" onclick="pauseRecord()">暂停</button>
-        <button id="resume-button" onclick="resumeRecord()">继续</button>
-        <button id="stop-button" onclick="stopRecord()">停止录制</button>
-        <button id="download-button" onclick="download()">下载视频</button>
+      <button id="start-button">开始录制</button>
+      <button id="pause-button">暂停</button>
+      <button id="resume-button">继续</button>
+      <button id="stop-button">停止录制</button>
+      <button id="download-button">下载视频</button>
     </p>
     <p id="text"></p>
     <div>
-        <video id="preview" autoplay></video>
-        <video id="playback" controls style="display: none;"></video>
+      <video id="preview" autoplay></video>
+      <video id="playback" controls style="display: none"></video>
     </div>
 
-    <script src="./main.js"></script>
-</body>
-
+    
+  </body>
 </html>

@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="./assets/index.css" />
-    <script src="./config.js"></script>
+    
     <title>LEEL-个人主页</title>
+    <script type="module" crossorigin src="/static/js/index-0057a35f.js"></script>
+    <link rel="modulepreload" crossorigin href="/static/js/modulepreload-polyfill-3cfb730f.js">
+    <link rel="stylesheet" href="/static/css/index-53751c8c.css">
   </head>
   <body>
     <div class="home">
@@ -98,100 +100,5 @@
       </div>
     </div>
   </body>
-  <script>
-    const projectlistDom = document.getElementById('projectlist')
-
-    CONFIG.items.forEach(item => {
-      projectlistDom.innerHTML += `
-        <div class="card-wrap">
-          <div class="card" onclick="tolink('${item.href}')">
-            <div
-              class="card-bg"
-              style="background-image: url(${item.url});"
-            ></div>
-            <div class="card-info">
-              <h1>${item.title}</h1>
-              <p>${item.content}</p>
-            </div>
-          </div>
-        </div>
-      `
-    })
-
-    let width, height, mouseX, mouseY, mousePX, mousePY
-
-    const cardDom = document.getElementsByClassName('card')
-
-    const init = e => {
-      width = e.target.parentNode.offsetWidth
-      height = e.target.parentNode.offsetHeight
-      mouseX = e.pageX - e.target.parentNode.offsetLeft - width / 2
-      mouseY = e.pageY - e.target.parentNode.offsetTop - height / 2
-      mousePX = mouseX / width
-      mousePY = mouseY / height
-    }
-
-    const resetting = () => {
-      width = 0
-      height = 0
-      mouseX = 0
-      mouseY = 0
-      mousePX = 0
-      mousePY = 0
-    }
-
-    const setStyle = e => {
-      if (!e?.target) return
-      const rX = mousePX * 10
-      const rY = mousePY * -10
-      e.target.setAttribute('style', `transform:rotateY(${rX}deg) rotateX(${rY}deg)`)
-    }
-
-    [...cardDom].forEach(element => {
-      element.addEventListener('mousemove', e => {
-        init(e)
-        setStyle(e)
-      })
-
-      element.addEventListener('mouseleave', e => {
-        setTimeout(() => {
-          resetting()
-          setStyle(e)
-        }, 100)
-      })
-    })
-
-    // 获取一言数据
-    fetch('https://v1.hitokoto.cn')
-      .then(function (res) {
-        return res.json()
-      })
-      .then(function (e) {
-        document.getElementById('description').innerHTML =
-          e.hitokoto + '<br/> -「<strong>' + e.from + '</strong>」'
-      })
-      .catch(function (err) {
-        console.error(err)
-      })
-
-      
-    const tolink = href => {
-      window.location.href = href
-    }
-
-    const toEl = toEl => {
-      // toEl 为指定跳转到该位置的DOM节点
-      let bridge = toEl
-      let body = document.body
-      let height = 0 // 计算该 DOM 节点到 body 顶部距离
-      do {
-        height += bridge.offsetTop
-        bridge = bridge.offsetParent
-      } while (bridge !== body) // 滚动到指定位置
-      window.scrollTo({
-        top: height,
-        behavior: 'smooth'
-      })
-    }
-  </script>
+  
 </html>

@@ -20,6 +20,8 @@
         padding: 10px 0;
       }
     </style>
+    <script type="module" crossorigin src="/static/js/index-3b822b7b.js"></script>
+    <link rel="modulepreload" crossorigin href="/static/js/modulepreload-polyfill-3cfb730f.js">
   </head>
   <body>
     <div id="main">
@@ -28,7 +30,7 @@
           <input id="file" type="file" />
         </div>
         <div>
-          <button onclick="copy()">点击复制图片bass64地址</button>
+          <button id="copy">点击复制图片bass64地址</button>
         </div>
         <div>
           <img id="image" src="" alt="" />
@@ -36,70 +38,5 @@
       </div>
     </div>
   </body>
-  <script>
-    let eleFile = document.querySelector('#file'),
-      img = new Image()
-
-    // 压缩图片需要的一些元素和对象
-    let reader = new FileReader()
-
-    // 选择的文件对象
-    let file = null
-
-    // 缩放图片需要的canvas
-    let canvas = document.createElement('canvas')
-    let context = canvas.getContext('2d')
-
-    // base64地址图片加载完毕后
-    img.onload = function () {
-      // 图片原始尺寸
-      let originWidth = this.width
-      let originHeight = this.height
-      // 最大尺寸限制
-      let maxWidth = 400,
-        maxHeight = 400
-      // 目标尺寸
-      let targetWidth = originWidth,
-        targetHeight = originHeight
-      // 图片尺寸超过400x400的限制
-      if (originWidth > maxWidth || originHeight > maxHeight) {
-        if (originWidth / originHeight > maxWidth / maxHeight) {
-          // 更宽，按照宽度限定尺寸
-          targetWidth = maxWidth
-          targetHeight = Math.round(maxWidth * (originHeight / originWidth))
-        } else {
-          targetHeight = maxHeight
-          targetWidth = Math.round(maxHeight * (originWidth / originHeight))
-        }
-      }
-
-      // canvas对图片进行缩放
-      canvas.width = targetWidth
-      canvas.height = targetHeight
-      // 清除画布
-      context.clearRect(0, 0, targetWidth, targetHeight)
-      // 图片压缩
-      context.drawImage(img, 0, 0, targetWidth, targetHeight)
-      // canvas转为blob并上传
-      //   canvas.toBlob(function (blob) {
-      //     console.log(blob)
-      //   }, file.type || 'image/png')
-      const url = canvas.toDataURL(file.type || 'image/png', 1)
-      image.src = url
-    }
-    function copy() {
-      navigator.clipboard.writeText(image.src)
-    }
-    // 文件base64化，以便获知图片原始尺寸
-    reader.onload = function (e) {
-      img.src = e.target.result
-    }
-    eleFile.addEventListener('change', function (event) {
-      file = event.target.files[0]
-      // 选择的文件是图片
-      if (file.type.indexOf('image') == 0) {
-        reader.readAsDataURL(file)
-      }
-    })
-  </script>
+  
 </html>
