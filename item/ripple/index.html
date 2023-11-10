@@ -6,46 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>水波纹</title>
     <style>
-      .ui-button {
-        display: inline-block;
-        line-height: 20px;
-        font-size: 14px;
-        text-align: center;
-        border: 1px solid #00a5e0;
-        background-color: #00a5e0;
-        color: #fff;
-        border-radius: 4px;
-        padding: 9px 15px;
-        min-width: 50px;
-        background-repeat: no-repeat;
-        background-position: center;
-        text-decoration: none;
-        -webkit-transition: border-color 0.15s, background-color 0.15s, opacity 0.15s;
-        transition: border-color 0.15s, background-color 0.15s, opacity 0.15s;
-        cursor: pointer;
-        overflow: visible;
-        outline: none;
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
       }
       #img {
-        -webkit-user-drag: none;
+        width: 100vw;
+        height: calc(100vh - 60px);
+        object-fit: cover;
+      }
+      .title {
+        padding: 10px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 900;
       }
     </style>
-    <script type="module" crossorigin src="/static/js/index-c2629219.js"></script>
+    <script type="module" crossorigin src="/static/js/index-3948228c.js"></script>
     <link rel="modulepreload" crossorigin href="/static/js/modulepreload-polyfill-3cfb730f.js">
   </head>
 
   <body>
-    <div style="display: block; margin: auto; width: 800px; padding-top: 10px">
-      <p>
-        在Chrome或者Firefox浏览器下点击下面的按钮或者图片，就会看到，从点击位置开始，有水波荡漾的特效：
-      </p>
-      <div style="padding: 20px 0">
-        <div style="padding-bottom: 10px">
-          <button id="button" type="button" class="ui-button">更换图片</button>
-        </div>
-        <img id="img" src="" alt="加载中" width="800" />
-      </div>
-    </div>
+    <div class="title">水波荡漾的特效展示</div>
+    <img id="img" src="https://bing.img.run/rand_uhd.php" alt="加载中" />
   </body>
   
 </html>
