@@ -12,9 +12,12 @@
         overflow: hidden;
       }
       #img {
-        width: 100vw;
-        height: calc(100vh - 60px);
+        --margin: 20px;
+        width: calc(100vw - var(--margin) * 2);
+        height: calc(100vh - 60px - var(--margin) * 2);
         object-fit: cover;
+        border-radius: 10px;
+        margin: var(--margin);
       }
       .title {
         padding: 10px;
@@ -30,7 +33,7 @@
   </head>
 
   <body>
-    <div class="title">水波荡漾的特效展示</div>
+    <div class="title">水波荡漾的特效展示，点击查看效果</div>
     <img id="img" src="https://bing.img.run/rand_uhd.php" alt="加载中" />
   </body>
   
